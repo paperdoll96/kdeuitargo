@@ -1,0 +1,41 @@
+---
+# svc-main -> Cluster IP (Default)
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-main # rule에 있는 svc-main 과 같아야함 !  ! ! ! ! ! ! ! !
+spec:
+  selector:
+    app: main
+  ports:
+  - port: 80
+    targetPort: 80
+
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: main
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: main
+  template:
+    metadata:
+      labels:
+        app: main
+    spec:
+      containers:
+      - name: main
+        image: paperdoll96/portal:main
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "64Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 80
+
+# deploy-main
