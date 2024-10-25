@@ -1,41 +1,37 @@
 ---
-# svc-main -> Cluster IP (Default)
+# svc-etc > cluster-ip(default)
 apiVersion: v1
 kind: Service
 metadata:
-  name: svc-main # rule에 있는 svc-main 과 같아야함 !  ! ! ! ! ! ! ! !
+  name: svc-etc
 spec:
   selector:
-    app: main
+    app: etc
   ports:
   - port: 80
     targetPort: 80
-
-
 ---
+# deploy-etc
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: main
+  name: etc
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: main
+      app: etc
   template:
     metadata:
       labels:
-        app: main
+        app: etc
     spec:
       containers:
-      - name: main
-        image: paperdoll96/portal:main
-        imagePullPolicy: IfNotPresent
+      - name: etc
+        image: paperdoll96/portal:notpage
         resources:
           limits:
             memory: "64Mi"
             cpu: "250m"
         ports:
         - containerPort: 80
-
-# deploy-main

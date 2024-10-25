@@ -26,17 +26,17 @@ spec:
             port: 
               number: 80
       - pathType: Prefix
-        path: "/"
+        path: "/($)"
         backend:
           service:
-            name: svc-main
+            name: svc-default
             port: 
               number: 80              
       - pathType: Prefix
         path: /*
         backend:
           service:
-            name: default-error
+            name: svc-etc
             port: 
               number: 80
 
